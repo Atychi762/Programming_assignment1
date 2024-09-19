@@ -42,10 +42,5 @@ public class Booking {
 
         return outputString;
     }
-
-    public static void main(String[] args){
-        LocalDateTime dateTime = LocalDateTime.now();
-    }
-
 }
 
