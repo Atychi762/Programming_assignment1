@@ -1,4 +1,5 @@
 import java.time.*;
+import java.time.chrono.ChronoLocalDate;
 import java.util.UUID;
 
 public class Booking {
@@ -8,39 +9,47 @@ public class Booking {
     public int patientNum;
     public HealthPractice practice;
     public LocalDateTime dateTime;
+    public LocalDate now = LocalDate.now();
+    private HealthPracticeAppointmentWebservice timeWebService;
 
     //Constructor for this class sets the values above in the case all are provided
     public Booking(String patient, int patientNum, HealthPractice practice, LocalDateTime dateTime){
+        //Check if date and time is in the future, if not throw IllegalArgumentException
+        if(now.isAfter(ChronoLocalDate.from(dateTime))) throw new IllegalArgumentException("Can't have a date in the past");
+        this.dateTime = dateTime;
+
         this.patient = patient;
         this.patientNum = patientNum;
         this.practice = practice;
-        this.dateTime = dateTime;
         this.bookingNumber = UUID.randomUUID().toString();
     }
 
-    //Method returns the data about the health practice
-    public HealthPractice GetPractice(){
-        return practice;
-    }
-
-    public int GetPatientNum(){
-        return patientNum;
-    }
-
-    public void SetPatientNum(int patientNum){
+    public Booking(String patient, int patientNum, HealthPractice practice){
+        this.patient = patient;
         this.patientNum = patientNum;
+        this.practice = practice;
+        this.bookingNumber = UUID.randomUUID().toString();
     }
 
-    @Override
-    public String toString(){
-        String outputString = "";
-        outputString += "Booking ID Number: " + bookingNumber + "\n";
-        outputString += "Patient Number: " + patientNum +"\n";
-        outputString += "Health Practice: " + practice.GetPracticeName() + "\n";
-        outputString += "Address: " + practice.GetPracticeAddress() + "\n";
-        outputString += "Date & Time: On " + dateTime.getDayOfWeek() + ", "+ dateTime.getMonthValue() + dateTime.getMonth() + dateTime.getYear() + " at " + dateTime.getHour() + ":" + dateTime.getMinute();
-
-        return outputString;
+    public int getPatientNumber(){
+        return this.patientNum;
     }
+    public void setPatientNumber(int num){
+        this.patientNum = num;
+    }
+
+    public String getPracticeDetails(){
+        String output = "Practice Name: "+practice.getPracticeName()+"\nPractice Address: "+practice.getPracticeAddress();
+        return output;
+    }
+
+    public void setHealthPracticeAppointmentWebservice(HealthPracticeAppointmentWebservice service){
+        this.timeWebService = service;
+    }
+
+    public void addDateTime(LocalDateTime time){
+        dateTime = time;
+    }
+
 }
 

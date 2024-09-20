@@ -10,12 +10,12 @@ public class HealthPractice {
     }
 
     //Method to get the practice name
-    public String GetPracticeName(){
+    public String getPracticeName(){
         return this.hPName;
     }
 
     //Method to get the practice address
-    public String GetPracticeAddress(){
+    public String getPracticeAddress(){
         return this.hPAddress;
     }
 }
