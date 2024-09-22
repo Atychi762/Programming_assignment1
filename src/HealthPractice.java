@@ -1,3 +1,6 @@
+// Peter Fitzgerald
+//22323303
+
 public class HealthPractice {
     //Data fields used in this class
     public String hPName;
